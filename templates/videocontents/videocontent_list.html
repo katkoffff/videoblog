@@ -1,0 +1,35 @@
+{% extends 'videocontents/base.html' %}
+{% block title %} {% endblock title %}
+{% block header %} bg1 {% endblock header %}
+{% block videocontents %}
+
+<div class="left-ads-display col-lg-9">
+    <div class="row">
+        {% for videocontent in videocontent_list %}
+            <div class="col-md-4 product-men">
+                <div class="product-shoe-info editContent text-center mt-lg-4" >
+                    <div class="men-thumb-item">
+                        <img src="{{ videocontent.content.url }}" class="img-fluid" alt="" >
+                    </div>
+                    <div class="item-info-product">
+                        <h4 class="">
+                            <a href={{ videocontent.get_absolute_url }} class="editContent" >
+                                {{ videocontent.title}}
+                            </a>
+                        </h4>
+
+                        <div class="product_price">
+                            <div class="grid-price">
+                                <span class="money editContent" >
+                                    {{ videocontent.description|safe }}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock videocontents %}

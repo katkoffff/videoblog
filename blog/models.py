@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 class VideoContent(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author_video')
@@ -11,13 +13,20 @@ class VideoContent(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return f"{self.id}"
+
+    def get_commentary(self):
+        return self.commentary_set.filter(parent__isnull=True)
+
     class Meta:
         verbose_name = 'Видео'
         verbose_name_plural = 'Видео'
 
 
 class Commentary(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author_commentary')
+    name = models.CharField('Имя', max_length=30)
+    email = models.EmailField()
     video = models.ForeignKey(VideoContent, on_delete=models.CASCADE, verbose_name='video_commentary')
     content = models.TextField('Комментарий')
     parent = models.ForeignKey('self', verbose_name='parent', on_delete=models.SET_NULL, blank=True, null=True)
